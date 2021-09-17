@@ -6,6 +6,8 @@ import Felder.Item;
 public class main {
 
 	public static void main(String[] args) {
+		GUI gui = new GUI();
+		gui.openGUI();
 		File_handling file_handling = new File_handling();
 		file_handling.readMap();
 		Board board = file_handling.initBoard();
@@ -14,7 +16,7 @@ public class main {
 		
 		ArrayList<Item> items = board.getItems();
 		
-		A_Star pathfinding = new A_Star(board.getFields(), items.get(0), items.get(1), board.getHeight_(), board.getWidth_());
+		A_Star pathfinding = new A_Star(gui, board.getFields(), items.get(0), items.get(1), board.getHeight_(), board.getWidth_());
 		
 		if(pathfinding.findPath()) {
 			System.out.println();

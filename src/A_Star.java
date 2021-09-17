@@ -1,18 +1,23 @@
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import Felder.Field;
 import Felder.Item;
 
 public class A_Star {
 	ArrayList<ArrayList<Field>> board_ = new ArrayList<ArrayList<Field>>();
 	ArrayList<Field> open_set_ = new ArrayList<Field>();
+	ArrayList<Field> closed_set_ = new ArrayList<>();
 
 	Item start_;
 	Item goal_;
 	int height_;
 	int width_;
+	
+	GUI gui_;
 
-	public A_Star(ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_) {
+	public A_Star(GUI gui, ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_) {
 		super();
 		for (int y = 0; y < height_; y++) {
 			board_.add(new ArrayList<Field>());
@@ -24,6 +29,7 @@ public class A_Star {
 		this.goal_ = goal_;
 		this.height_ = height_;
 		this.width_ = width_;
+		gui_ = gui;
 
 		open_set_.add(start_);
 	}
@@ -88,7 +94,6 @@ public class A_Star {
 	}
 
 	public boolean findPath() {
-		ArrayList<Field> closed_set_ = new ArrayList<>();
 		start_.setF((int) calculateHeursitic(start_, goal_));
 		start_.setG(0);
 		while(open_set_.size() != 0) {
@@ -96,6 +101,8 @@ public class A_Star {
 			if(current.getFieldId() == goal_.getFieldId()) {
 				return true;
 			}
+			
+			updateGUI();
 			
 			//int index_current = getArrayIndexFromCurrentLowF(current);
 			open_set_.remove(current);
@@ -128,4 +135,11 @@ public class A_Star {
 
 		return false;
 	}
+	
+	public void updateGUI() {
+		   gui_.closed_set_label.setText("Closed Set: " + String.valueOf(closed_set_.size()));
+		   gui_.open_set_label.setText("Open Set: " + String.valueOf(open_set_.size()));
+	}
+
+
 }
