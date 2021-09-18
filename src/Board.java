@@ -15,6 +15,8 @@ public class Board {
 	ArrayList<Field> fields_ = new ArrayList<Field>();
 	ArrayList<Item> items_ = new ArrayList<Item>();
 
+	GUI gui;
+	
 	public Board(int height, int width, int number_items, String map_data) {
 		this.height_ = height;
 		this.width_ = width;
@@ -47,19 +49,26 @@ public class Board {
 	}
 
 	void printMap() {
-		int width_counter = 0;
-		for (Field field : fields_) {
-			if (width_counter == width_) {
-				width_counter = 0;
-				System.out.println();
-			}
-			if(field != null) {
-				field.print();				
-			} else {
-				System.out.print(" ");
-			}
-			width_counter++;
-		}
+		Thread t1 = new Thread(new Runnable() {
+		    @Override
+		    public void run() {
+		    	int width_counter = 0;
+				for (Field field : fields_) {
+					if (width_counter == width_) {
+						width_counter = 0;
+						System.out.println();
+					}
+					if(field != null) {
+						field.print();				
+					} else {
+						System.out.print(" ");
+					}
+					width_counter++;
+				}
+		    }
+		});  
+		t1.start();
+		
 	}
 
 	void printMapstring() {
@@ -104,6 +113,10 @@ public class Board {
 	
 	public ArrayList<Item> getItems() {
 		return items_;
+	}
+	
+	public void setGUI(GUI gui) {
+		this.gui = gui;
 	}
 	
 	

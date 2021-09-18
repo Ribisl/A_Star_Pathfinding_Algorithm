@@ -12,8 +12,10 @@ public class File_handling {
 	void readMap() {
 		try {
 			//File file = new File("C:\\Users\\Mathias\\eclipse-workspace\\A_Star_Pathfinding_Algorithm\\src\\config_01.txt");
-			File file = new File ("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\mazeGenerator\\config_1000x1000.txt");
-			//File file = new File("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\oop1ss21_a1_314\\config\\config_200x200.txt");
+			//File file = new File ("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\mazeGenerator\\config_1000x1000.txt");
+			//File file = new File("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\mazeGenerator\\config_100x100.txt");
+			//File file = new File("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\mazeGenerator\\config_500x500.txt");
+			File file = new File("C:\\Users\\Mathias\\Documents\\UNI\\OOP1\\mazeGenerator\\config_200x200.txt");
 			Scanner myReader = new Scanner(file);
 			while(myReader.hasNextLine()) {
 				file_data += myReader.nextLine() + "\n";

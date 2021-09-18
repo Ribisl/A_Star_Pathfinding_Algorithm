@@ -28,4 +28,10 @@ public final class Road extends Field {
 		System.out.print('#');
 	}
 
+	@Override
+	public boolean isItem() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

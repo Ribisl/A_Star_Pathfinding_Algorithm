@@ -34,4 +34,9 @@ public final class Item extends Field{
 	void print() {
 		System.out.print(name_);
 	}
+	@Override
+	public boolean isItem() {
+		return true;
+	}
+	
 }

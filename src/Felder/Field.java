@@ -20,6 +20,7 @@ public abstract class Field {
 	private Field neighbor_top;
 	private Field neighbor_bottom;
 	Field[] neighbors = {null,null,null,null};
+	public Field previous = null;
 	
 	public Field() {
 		counter++;
@@ -47,6 +48,7 @@ public abstract class Field {
 	
 	abstract public boolean isBlocked();
 	abstract public void print();
+	abstract public boolean isItem();
 
 
 	public int getF() {

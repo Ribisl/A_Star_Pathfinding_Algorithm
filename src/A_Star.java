@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -113,6 +114,7 @@ public class A_Star {
 				Field neighbor = current.getNeighbor(i);
 				if(neighbor != null) {
 					if(neighbor.getFieldId() == goal_.getFieldId()) {
+						reconstructPath(current);
 						return true;
 					}
 					if(!neighbor.isBlocked() && !closed_set_.contains(neighbor)) {
@@ -124,9 +126,12 @@ public class A_Star {
 						} else {
 							neighbor.setG(temp_g);
 							open_set_.add(neighbor);
+							gui_.getPanels().get(neighbor.getPosition().y_).get(neighbor.getPosition().x_).setBackground(Color.green);
+						
 						}
 						neighbor.setH((int) calculateHeursitic(neighbor, goal_));
 						neighbor.setF(neighbor.getH() + neighbor.getG());
+						neighbor.previous = current;
 					}
 				}
 			}
@@ -134,6 +139,15 @@ public class A_Star {
 		}
 
 		return false;
+	}
+	
+	void reconstructPath(Field current) {
+		Field temp = current;
+		while(temp.previous != null) {
+			gui_.getPanels().get(temp.previous.getPosition().y_).get(temp.previous.getPosition().x_).setBackground(Color.red);
+			temp = temp.previous;
+		}
+		System.out.println("\nReconstructed Path");
 	}
 	
 	public void updateGUI() {
