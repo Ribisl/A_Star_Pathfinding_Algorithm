@@ -13,6 +13,8 @@ public class A_Star {
 	int width_;
 
 	private Renderer renderer;
+	
+	int frameskip = 60; // set to high number when bigger board (1000x1000) for faster rendering
 
 	public A_Star(ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_, Renderer renderer) {
 		super();
@@ -97,7 +99,6 @@ public class A_Star {
 		start_.setG(0);
 
 		boolean needsRerender = true;
-		int frameskip = 1; // set to high number when bigger board (1000x1000) for faster rendering
 		long framecounter = 0;
 
 		while (open_set_.size() != 0) {

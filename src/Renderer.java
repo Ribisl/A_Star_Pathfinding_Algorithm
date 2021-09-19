@@ -82,7 +82,7 @@ public class Renderer extends Canvas {
 
 	private void createFrame(String titel) {
 		frame = new JFrame(titel);
-		frame.setUndecorated(true);
+		frame.setUndecorated(false);
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen testing
 		frame.setSize(width, height);
 		frame.setResizable(true);

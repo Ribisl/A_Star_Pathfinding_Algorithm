@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import Felder.Item;
 
-public class Main {
+public class main {
 
 	public static void main(String[] args) {
 		File_handling file_handling = new File_handling();
