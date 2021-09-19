@@ -1,5 +1,6 @@
-import java.awt.List;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 import Felder.Field;
 import Felder.Item;
@@ -14,6 +15,8 @@ public class Board {
 
 	ArrayList<Field> fields_ = new ArrayList<Field>();
 	ArrayList<Item> items_ = new ArrayList<Item>();
+
+	public JFrame frame;
 
 	public Board(int height, int width, int number_items, String map_data) {
 		this.height_ = height;
@@ -53,14 +56,16 @@ public class Board {
 				width_counter = 0;
 				System.out.println();
 			}
-			if(field != null) {
-				field.print();				
+			if (field != null) {
+				field.print();
 			} else {
 				System.out.print(" ");
 			}
 			width_counter++;
 		}
 	}
+
+
 
 	void printMapstring() {
 		System.out.println(map_data_);
@@ -101,11 +106,9 @@ public class Board {
 	public ArrayList<Field> getFields() {
 		return fields_;
 	}
-	
+
 	public ArrayList<Item> getItems() {
 		return items_;
 	}
-	
-	
 
 }

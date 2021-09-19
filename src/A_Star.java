@@ -4,15 +4,17 @@ import Felder.Field;
 import Felder.Item;
 
 public class A_Star {
-	ArrayList<ArrayList<Field>> board_ = new ArrayList<ArrayList<Field>>();
-	ArrayList<Field> open_set_ = new ArrayList<Field>();
+	public ArrayList<ArrayList<Field>> board_ = new ArrayList<ArrayList<Field>>();
+	public ArrayList<Field> open_set_ = new ArrayList<Field>();
 
 	Item start_;
 	Item goal_;
 	int height_;
 	int width_;
 
-	public A_Star(ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_) {
+	private Renderer renderer;
+
+	public A_Star(ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_, Renderer renderer) {
 		super();
 		for (int y = 0; y < height_; y++) {
 			board_.add(new ArrayList<Field>());
@@ -24,6 +26,8 @@ public class A_Star {
 		this.goal_ = goal_;
 		this.height_ = height_;
 		this.width_ = width_;
+
+		this.renderer = renderer;
 
 		open_set_.add(start_);
 	}
@@ -91,27 +95,29 @@ public class A_Star {
 		ArrayList<Field> closed_set_ = new ArrayList<>();
 		start_.setF((int) calculateHeursitic(start_, goal_));
 		start_.setG(0);
-		while(open_set_.size() != 0) {
+
+		while (open_set_.size() != 0) {
 			Field current = getLowestFScore();
-			if(current.getFieldId() == goal_.getFieldId()) {
+			renderer.render(board_);
+			if (current.getFieldId() == goal_.getFieldId()) {
 				return true;
 			}
-			
-			//int index_current = getArrayIndexFromCurrentLowF(current);
+
 			open_set_.remove(current);
 			closed_set_.add(current);
 			addNeighbors(current);
-			
-			for(int i = 0; i< 4; i++) {
+
+			for (int i = 0; i < 4; i++) {
 				Field neighbor = current.getNeighbor(i);
-				if(neighbor != null) {
-					if(neighbor.getFieldId() == goal_.getFieldId()) {
+				if (neighbor != null) {
+					if (neighbor.getFieldId() == goal_.getFieldId()) {
+						reconstructPath(current);
 						return true;
 					}
-					if(!neighbor.isBlocked() && !closed_set_.contains(neighbor)) {
-						int temp_g = current.getG() +1;
-						if(open_set_.contains(neighbor)) {
-							if(temp_g < neighbor.getG()) {
+					if (!neighbor.isBlocked() && !closed_set_.contains(neighbor)) {
+						int temp_g = current.getG() + 1;
+						if (open_set_.contains(neighbor)) {
+							if (temp_g < neighbor.getG()) {
 								neighbor.setG(temp_g);
 							}
 						} else {
@@ -120,12 +126,22 @@ public class A_Star {
 						}
 						neighbor.setH((int) calculateHeursitic(neighbor, goal_));
 						neighbor.setF(neighbor.getH() + neighbor.getG());
+						neighbor.setPrevious(current);
 					}
 				}
 			}
-			
+
 		}
 
 		return false;
+	}
+
+	public void reconstructPath(Field current) {
+		Field temp = current;
+		while (temp.getPrevious() != null) {
+			temp.setFastest(true);
+			temp = temp.getPrevious();
+		}
+		System.out.println("\nReconstructed Path");
 	}
 }
