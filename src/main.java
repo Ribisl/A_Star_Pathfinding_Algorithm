@@ -29,7 +29,7 @@ public class Main {
 		}
 
 		while (true) {
-			r.render(pathfinding.board_);
+			r.render(pathfinding.board_, true);
 		}
 
 	}
