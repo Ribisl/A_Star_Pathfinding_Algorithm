@@ -98,7 +98,7 @@ public class A_Star {
 
 		while (open_set_.size() != 0) {
 			Field current = getLowestFScore();
-			renderer.render(board_);
+			renderer.render(board_, false);
 			if (current.getFieldId() == goal_.getFieldId()) {
 				return true;
 			}

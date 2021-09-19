@@ -42,5 +42,6 @@ public final class Item extends Field {
 	public void render(Graphics2D g, int maxF, int minF) {
 		g.setColor(new Color(0, 0, 255));
 		g.fillRect(getPosition().x_, getPosition().y_, 1, 1);
+		setRendered(true);
 	}
 }

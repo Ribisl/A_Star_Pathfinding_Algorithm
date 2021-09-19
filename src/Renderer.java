@@ -4,6 +4,8 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+import java.awt.event.*;
+
 import javax.swing.JFrame;
 
 import Felder.Field;
@@ -15,7 +17,7 @@ public class Renderer extends Canvas {
 	private final String title = "Path Finding";
 	private long currSecond = 0;
 
-	public static final int width = 1000, height = 1000;
+	public static int width = 1000, height = 1000;
 
 	private int maxF, minF;
 
@@ -23,7 +25,7 @@ public class Renderer extends Canvas {
 		createFrame(title);
 	}
 
-	public void render(ArrayList<ArrayList<Field>> board) {
+	public void render(ArrayList<ArrayList<Field>> board, boolean renderAll) {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			this.createBufferStrategy(1);
@@ -51,7 +53,7 @@ public class Renderer extends Canvas {
 
 		for (ArrayList<Field> x : board) {
 			for (Field f : x) {
-				if (f != null) {
+				if (f != null && (!f.isRendered() || renderAll)) {
 					f.render(g, maxF, minF);
 				}
 			}
@@ -79,12 +81,23 @@ public class Renderer extends Canvas {
 	private void createFrame(String titel) {
 		frame = new JFrame(titel);
 		frame.setUndecorated(true);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen testing
 		frame.setSize(width, height);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.add(this);
+		this.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					System.exit(0);
+				}
+			}
+		});
 		frame.setVisible(true);
+		width = frame.getWidth();
+		height = frame.getHeight();
+		frame.requestFocus();
 	}
 
 }

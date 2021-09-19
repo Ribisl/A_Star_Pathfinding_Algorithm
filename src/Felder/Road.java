@@ -56,6 +56,7 @@ public final class Road extends Field {
 		}
 		g.setColor(c);
 		g.fillRect(getPosition().x_, getPosition().y_, 1, 1);
+		setRendered(true);
 	}
 
 }

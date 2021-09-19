@@ -24,6 +24,7 @@ public abstract class Field {
 	Field[] neighbors = { null, null, null, null };
 	private Field previous;
 	private boolean isFastest = false;
+	private boolean isRendered = false;
 
 	public Field() {
 		counter++;
@@ -60,6 +61,9 @@ public abstract class Field {
 	}
 
 	public void setF(int f_) {
+		if(f_ != this.f_) {
+			this.setRendered(false);
+		}
 		this.f_ = f_;
 	}
 
@@ -133,6 +137,14 @@ public abstract class Field {
 
 	public void setFastest(boolean isFastest) {
 		this.isFastest = isFastest;
+	}
+
+	public boolean isRendered() {
+		return isRendered;
+	}
+
+	public void setRendered(boolean isRendered) {
+		this.isRendered = isRendered;
 	}
 
 }
