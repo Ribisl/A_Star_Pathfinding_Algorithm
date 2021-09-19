@@ -96,9 +96,19 @@ public class A_Star {
 		start_.setF((int) calculateHeursitic(start_, goal_));
 		start_.setG(0);
 
+		boolean needsRerender = true;
+		int frameskip = 1; // set to high number when bigger board (1000x1000) for faster rendering
+		long framecounter = 0;
+
 		while (open_set_.size() != 0) {
 			Field current = getLowestFScore();
-			renderer.render(board_, false);
+			if (needsRerender) {
+				framecounter++;
+				if(framecounter%frameskip == 0) {
+					renderer.render(board_, false);
+					needsRerender = false;
+				}
+			}
 			if (current.getFieldId() == goal_.getFieldId()) {
 				return true;
 			}
@@ -125,8 +135,12 @@ public class A_Star {
 							open_set_.add(neighbor);
 						}
 						neighbor.setH((int) calculateHeursitic(neighbor, goal_));
+						int prevF = neighbor.getF();
 						neighbor.setF(neighbor.getH() + neighbor.getG());
 						neighbor.setPrevious(current);
+						if(prevF != neighbor.getF()) {
+							needsRerender = true;
+						}
 					}
 				}
 			}

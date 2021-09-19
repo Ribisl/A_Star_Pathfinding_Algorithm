@@ -49,7 +49,9 @@ public class Renderer extends Canvas {
 		maxF = 0;
 		minF = Integer.MAX_VALUE;
 
-		findMaxMinF(board);
+		if (renderAll) {
+			findMaxMinF(board);
+		}
 
 		for (ArrayList<Field> x : board) {
 			for (Field f : x) {
@@ -81,7 +83,7 @@ public class Renderer extends Canvas {
 	private void createFrame(String titel) {
 		frame = new JFrame(titel);
 		frame.setUndecorated(true);
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen testing
+		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen testing
 		frame.setSize(width, height);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

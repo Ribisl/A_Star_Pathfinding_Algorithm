@@ -40,12 +40,6 @@ public final class Road extends Field {
 			colorDiff = 0;
 		}
 
-		if(colorDiff < 0 || colorDiff > 255) {
-			System.out.println(maxF);
-			System.out.println(minF);
-			System.out.println(getF());
-		}
-
 		Color c;
 		if (isBlocked()) {
 			c = new Color(0, 0, 0);
