@@ -44,6 +44,12 @@ public final class Item extends Field {
 		g.fillRect(getPosition().x_, getPosition().y_, 1, 1);
 		setRendered(true);
 	}
+
+	@Override
+	public boolean isItem() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 	
 }

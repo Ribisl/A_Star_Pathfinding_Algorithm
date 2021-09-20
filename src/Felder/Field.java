@@ -55,6 +55,8 @@ public abstract class Field {
 	abstract public void print();
 
 	abstract public void render(Graphics2D g, int maxF, int minF);
+	
+	abstract public boolean isItem();
 
 	public int getF() {
 		return f_;

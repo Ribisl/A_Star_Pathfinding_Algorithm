@@ -24,7 +24,7 @@ public class CommandInput {
 	Map<String, COMMANDS> commands = new HashMap<String, COMMANDS>();
 
 	enum COMMANDS {
-		HELP, INFO, FILE, DRAW, SOLVE, SAVE, LOAD, EXIT;
+		HELP, INFO, FILE, DRAW, SOLVE, SAVE, LOAD, EXIT, CLEAR;
 	}
 
 	private static final String HELP_TEXT = "Das ist der HILFE Text";
@@ -46,6 +46,7 @@ public class CommandInput {
 		commands.put("save", COMMANDS.SAVE);
 		commands.put("load", COMMANDS.LOAD);
 		commands.put("exit", COMMANDS.EXIT);
+		commands.put("clear", COMMANDS.CLEAR);
 
 		System.out.println(INFO_TEXT);
 		board_ = new Board();
@@ -96,10 +97,17 @@ public class CommandInput {
 			case EXIT:
 				System.exit(0);
 				break;
+			case CLEAR:
+				clearBoard();
 			default:
 				break;
 			}
 		}
+	}
+
+	private void clearBoard() {
+		board_.clear();
+		renderBoard(r, pathfinding);
 	}
 
 	private void drawMaze() {
@@ -165,6 +173,7 @@ public class CommandInput {
 	}
 
 	private void solveMaze() {
+		board_ = r.getBoard();
 		if (!file_loaded_) {
 
 			ArrayList<Item> items = board_.getItems();

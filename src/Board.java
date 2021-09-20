@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 import Felder.Field;
 import Felder.Item;
 import Felder.Road;
@@ -16,7 +14,6 @@ public class Board {
 	ArrayList<Field> fields_ = new ArrayList<Field>();
 	ArrayList<Item> items_ = new ArrayList<Item>();
 
-	public JFrame frame;
 
 	public Board(int height, int width, int number_items, String map_data) {
 		this.height_ = height;
@@ -151,7 +148,11 @@ public class Board {
 		return temp;
 	}
 
-	
-	
-
+	public void clear() {
+		for(Field f : fields_) {
+			if(!f.isItem()) {
+				((Road) f).setBlocked(false);
+			}
+		}
+	}
 }

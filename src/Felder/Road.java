@@ -52,5 +52,14 @@ public final class Road extends Field {
 		g.fillRect(getPosition().x_, getPosition().y_, 1, 1);
 		setRendered(true);
 	}
+	
+	public void setBlocked(boolean blocked) {
+		blocked_ = blocked;
+	}
+
+	@Override
+	public boolean isItem() {
+		return false;
+	}
 
 }

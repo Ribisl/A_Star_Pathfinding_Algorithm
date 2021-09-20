@@ -32,7 +32,7 @@ public class Renderer extends Canvas {
 	public Renderer(Board board) {
 		createFrame(title);
 		board_ = board;
-		render(null,false);
+		render(null, false);
 	}
 
 	public void render(Board fields2d_, boolean renderAll) {
@@ -118,9 +118,15 @@ public class Renderer extends Canvas {
 	public void paint(Graphics g) {
 		super.paint(g);
 		System.out.println("repaint");
+
+		int maze_pixel_width = width / board_.width_;
+		int maze_pixel_height = height / board_.height_;
+
 		if (board_ != null) {
-			board_.setField(new Road(false, p.x, p.y), p.x, p.y);
+			board_.setField(new Road(true, p.x / maze_pixel_width, p.y / maze_pixel_height), p.x / maze_pixel_width,
+					p.y / maze_pixel_height);
 		}
+		render(board_,true);
 		// g.drawRect(point_x, point_y, 1, 1);
 		// g.setColor(Color.RED);
 	}
@@ -131,6 +137,10 @@ public class Renderer extends Canvas {
 
 	public Canvas getCanvas() {
 		return this;
+	}
+	
+	public Board getBoard() {
+		return board_;
 	}
 
 }
