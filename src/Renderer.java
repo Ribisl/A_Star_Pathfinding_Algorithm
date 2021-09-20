@@ -119,10 +119,10 @@ public class Renderer extends Canvas {
 	public void paint(Graphics g) {
 		super.paint(g);
 
-		int maze_pixel_width = width / board_.width_;
-		int maze_pixel_height = height / board_.height_;
 
 		if (board_ != null) {
+			int maze_pixel_width = width / board_.width_;
+			int maze_pixel_height = height / board_.height_;
 			Road road;
 			if (left_click) {
 				road = new Road(true, mouse_pos.x / maze_pixel_width, mouse_pos.y / maze_pixel_height);
@@ -131,8 +131,8 @@ public class Renderer extends Canvas {
 			}
 			road.setRendered(false);
 			board_.setField(road, mouse_pos.x / maze_pixel_width, mouse_pos.y / maze_pixel_height);
+			render(board_, false);
 		}
-		render(board_, false);
 	}
 
 	public JFrame getJFrame() {

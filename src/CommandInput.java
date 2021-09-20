@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -74,40 +75,60 @@ public class CommandInput {
 			}
 
 			int param_count = input_splitted.length - 1;
-			
-			switch (commands.get(command)) {
-			case HELP:
-				System.out.println(HELP_TEXT);
-				break;
-			case INFO:
-				System.out.println(INFO_TEXT);
-				break;
-			case FILE:
-				printFileInfo();
-				break;
-			case DRAW:
-				drawMaze();
-				break;
-			case SOLVE:
-				solveMaze();
-				break;
-			case LOAD:
-				loadFile();
-				break;
-			case EXIT:
-				System.exit(0);
-				break;
-			case CLEAR:
-				clearBoard();
-				break;
-			case RENDER:
-				r.render(board_, true);
-			case FRAMESKIP:
-				pathfinding.frameskip = Integer.parseInt(input_splitted[1]);
-			default:
-				break;
+			try {
+				
+				switch (commands.get(command)) {
+				case HELP:
+					System.out.println(HELP_TEXT);
+					break;
+				case INFO:
+					System.out.println(INFO_TEXT);
+					break;
+				case FILE:
+					printFileInfo();
+					break;
+				case DRAW:
+					drawMaze();
+					break;
+				case SOLVE:
+					solveMaze();
+					break;
+				case LOAD:
+					loadFile();
+					break;
+				case EXIT:
+					System.exit(0);
+					break;
+				case CLEAR:
+					clearBoard();
+					break;
+				case RENDER:
+					r.render(board_, true);
+					break;
+				case FRAMESKIP:
+					pathfinding.frameskip = Integer.parseInt(input_splitted[1]);
+					break;
+				case SAVE:
+					saveFile(input_splitted[1]);
+					break;
+				default:
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println("UPS ERROR");
 			}
 		}
+	}
+
+	private void saveFile(String file_name) {
+		File f = new File(file_name);
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void clearBoard() {
