@@ -20,7 +20,7 @@ public final class Item extends Field {
 		coord_.y_ = y;
 	}
 
-	char getName() {
+	public char getName() {
 		return name_;
 	}
 
@@ -49,7 +49,5 @@ public final class Item extends Field {
 	public boolean isItem() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-	
-	
+	}	
 }

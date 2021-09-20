@@ -14,32 +14,31 @@ public class Board {
 	ArrayList<Field> fields_ = new ArrayList<Field>();
 	ArrayList<Item> items_ = new ArrayList<Item>();
 
-
 	public Board(int height, int width, int number_items, String map_data) {
 		this.height_ = height;
 		this.width_ = width;
 		this.number_items_ = number_items;
 		this.map_data_ = map_data;
-		
+
 		initBoard();
 	}
-	
+
 	public Board() {
 		height_ = 50;
 		width_ = 50;
 		number_items_ = 2;
 		int counter = 0;
-		for(int y = 0; y < height_; y++) {
-			for(int x = 0; x < width_;x++) {
+		for (int y = 0; y < height_; y++) {
+			for (int x = 0; x < width_; x++) {
 				Field field;
-				if(counter == 0) {
-					field = new Item('A', x,y);
+				if (counter == 0) {
+					field = new Item('A', x, y);
 					items_.add((Item) field);
-				} else if(counter == height_*width_-1) {
-					field = new Item('B',x,y);
+				} else if (counter == height_ * width_ - 1) {
+					field = new Item('B', x, y);
 					items_.add((Item) field);
 				} else {
-					field = new Road(false,x,y);
+					field = new Road(false, x, y);
 				}
 				fields_.add(field);
 				counter++;
@@ -69,9 +68,9 @@ public class Board {
 			}
 		}
 	}
-	
-	public void setField(Field f,int x, int y) {
-		fields_.set(y*width_+x, f);
+
+	public void setField(Field f, int x, int y) {
+		fields_.set(y * width_ + x, f);
 	}
 
 	void printMap() {
@@ -89,8 +88,6 @@ public class Board {
 			width_counter++;
 		}
 	}
-
-
 
 	void printMapstring() {
 		System.out.println(map_data_);
@@ -138,32 +135,32 @@ public class Board {
 
 	public ArrayList<ArrayList<Field>> getFields2d() {
 		ArrayList<ArrayList<Field>> temp = new ArrayList<ArrayList<Field>>();
-		
-		for(int y = 0; y < height_; y++) {
+
+		for (int y = 0; y < height_; y++) {
 			temp.add(new ArrayList<>());
-			for(int x = 0; x < width_; x++) {
-				temp.get(y).add(fields_.get(y*width_+x));
+			for (int x = 0; x < width_; x++) {
+				temp.get(y).add(fields_.get(y * width_ + x));
 			}
 		}
 		return temp;
 	}
 
 	public void clear() {
-		for(Field f : fields_) {
+		for (Field f : fields_) {
 			f.setF(0);
 			f.setG(0);
 			f.setH(0);
 			f.setPrevious(null);
 			f.setFastest(false);
 			f.setRendered(false);
-			if(!f.isItem()) {
+			if (!f.isItem()) {
 				((Road) f).setBlocked(false);
 			}
 		}
 	}
 
 	public void clearPath() {
-		for(Field f : fields_) {
+		for (Field f : fields_) {
 			f.setF(0);
 			f.setG(0);
 			f.setH(0);
@@ -171,5 +168,28 @@ public class Board {
 			f.setFastest(false);
 			f.setRendered(false);
 		}
+	}
+
+	public String getMapData() {
+		String temp = "";
+		temp += String.valueOf(width_) + "\n";
+		temp += String.valueOf(height_) + "\n";
+		temp += String.valueOf(number_items_) + "\n";
+		int width_counter = 0;
+		for (Field f : fields_) {
+			if(width_counter == width_-1) {
+				temp += "\n";
+				width_counter = 0;
+			}
+			if (f.isItem()) {
+				temp += ((Item) f).getName();
+			} else if(f.isBlocked()) {
+				temp += '#';
+			} else {
+				temp += '%';
+			}
+			width_counter++;
+		}
+		return temp;
 	}
 }

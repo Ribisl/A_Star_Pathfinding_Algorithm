@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -121,9 +122,10 @@ public class CommandInput {
 	}
 
 	private void saveFile(String file_name) {
-		File f = new File(file_name);
 		try {
-			f.createNewFile();
+			FileWriter myWriter = new FileWriter(file_name);
+			myWriter.write(board_.getMapData());
+			myWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
