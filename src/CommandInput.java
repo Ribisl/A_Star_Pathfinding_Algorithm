@@ -164,21 +164,17 @@ public class CommandInput {
 
 				r.mouse_pos = e.getPoint();
 
-				System.out.println("repaint");
 				frame.repaint();
 				r.render(board_, true);
-
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -187,14 +183,11 @@ public class CommandInput {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				// r.pointEnd = e.getPoint();
 			}
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				r.mouse_pos = e.getPoint();
-
-				System.out.println("repaint");
 				frame.repaint();
 			}
 		});
