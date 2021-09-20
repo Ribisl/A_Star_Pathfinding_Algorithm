@@ -25,7 +25,8 @@ public class Renderer extends Canvas {
 
 	private int maxF, minF;
 
-	public Point p = new Point(0, 0);
+	public Point mouse_pos = new Point(0, 0);
+	public boolean left_click = true;
 
 	Board board_;
 
@@ -117,18 +118,21 @@ public class Renderer extends Canvas {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println("repaint");
 
 		int maze_pixel_width = width / board_.width_;
 		int maze_pixel_height = height / board_.height_;
 
 		if (board_ != null) {
-			board_.setField(new Road(true, p.x / maze_pixel_width, p.y / maze_pixel_height), p.x / maze_pixel_width,
-					p.y / maze_pixel_height);
+			Road road;
+			if (left_click) {
+				road = new Road(true, mouse_pos.x / maze_pixel_width, mouse_pos.y / maze_pixel_height);
+			} else {
+				road = new Road(false, mouse_pos.x / maze_pixel_width, mouse_pos.y / maze_pixel_height);
+			}
+			road.setRendered(false);
+			board_.setField(road, mouse_pos.x / maze_pixel_width, mouse_pos.y / maze_pixel_height);
 		}
-		render(board_,false);
-		// g.drawRect(point_x, point_y, 1, 1);
-		// g.setColor(Color.RED);
+		render(board_, false);
 	}
 
 	public JFrame getJFrame() {
@@ -138,7 +142,7 @@ public class Renderer extends Canvas {
 	public Canvas getCanvas() {
 		return this;
 	}
-	
+
 	public Board getBoard() {
 		return board_;
 	}

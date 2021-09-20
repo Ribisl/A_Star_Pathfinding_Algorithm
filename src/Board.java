@@ -161,4 +161,15 @@ public class Board {
 			}
 		}
 	}
+
+	public void clearPath() {
+		for(Field f : fields_) {
+			f.setF(0);
+			f.setG(0);
+			f.setH(0);
+			f.setPrevious(null);
+			f.setFastest(false);
+			f.setRendered(false);
+		}
+	}
 }

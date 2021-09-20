@@ -15,7 +15,7 @@ public class A_Star {
 
 	private Renderer renderer;
 	
-	int frameskip = 1; // set to high number when bigger board (1000x1000) for faster rendering
+	public int frameskip = 50000; // set to high number when bigger board (1000x1000) for faster rendering
 
 	public A_Star(Board board, Item start_, Item goal_, int height_, int width_, Renderer renderer) {
 		super();

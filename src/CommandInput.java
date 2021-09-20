@@ -18,13 +18,14 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Felder.Field;
 import Felder.Item;
 
 public class CommandInput {
 	Map<String, COMMANDS> commands = new HashMap<String, COMMANDS>();
 
 	enum COMMANDS {
-		HELP, INFO, FILE, DRAW, SOLVE, SAVE, LOAD, EXIT, CLEAR;
+		HELP, INFO, FILE, DRAW, SOLVE, SAVE, LOAD, EXIT, CLEAR, RENDER , FRAMESKIP;
 	}
 
 	private static final String HELP_TEXT = "Das ist der HILFE Text";
@@ -47,6 +48,8 @@ public class CommandInput {
 		commands.put("load", COMMANDS.LOAD);
 		commands.put("exit", COMMANDS.EXIT);
 		commands.put("clear", COMMANDS.CLEAR);
+		commands.put("render", COMMANDS.RENDER);
+		commands.put("frameskip", COMMANDS.FRAMESKIP);
 
 		System.out.println(INFO_TEXT);
 		board_ = new Board();
@@ -71,10 +74,7 @@ public class CommandInput {
 			}
 
 			int param_count = input_splitted.length - 1;
-			if (param_count != 0) {
-				System.out.println(NO_PARAMS_TAKEN);
-				continue;
-			}
+			
 			switch (commands.get(command)) {
 			case HELP:
 				System.out.println(HELP_TEXT);
@@ -99,6 +99,11 @@ public class CommandInput {
 				break;
 			case CLEAR:
 				clearBoard();
+				break;
+			case RENDER:
+				r.render(board_, true);
+			case FRAMESKIP:
+				pathfinding.frameskip = Integer.parseInt(input_splitted[1]);
 			default:
 				break;
 			}
@@ -116,15 +121,31 @@ public class CommandInput {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				r.render(board_, true);
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					r.left_click = true;
+				} else {
+					r.left_click = false;
+				}
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					r.left_click = true;
+				} else {
+					r.left_click = false;
+				}
+
+				r.mouse_pos = e.getPoint();
+
+				System.out.println("repaint");
+				frame.repaint();
+				r.render(board_, true);
 
 			}
 
@@ -150,7 +171,9 @@ public class CommandInput {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				r.p = e.getPoint();
+				r.mouse_pos = e.getPoint();
+
+				System.out.println("repaint");
 				frame.repaint();
 			}
 		});
@@ -172,6 +195,8 @@ public class CommandInput {
 	}
 
 	private void solveMaze() {
+		//TODO clear old path 
+		clearPath();
 		board_ = r.getBoard();
 		ArrayList<Item> items = board_.getItems();
 
@@ -187,12 +212,17 @@ public class CommandInput {
 			System.out.println("NO PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
 		}
 
-		renderBoard(r, pathfinding);
+
+		r.render(pathfinding.board_, true);
 
 	}
 
+	private void clearPath() {
+		board_.clearPath();
+	}
+
 	private void renderBoard(Renderer r, A_Star pathfinding) {
-		r.render(pathfinding.board_, true);
+		r.render(pathfinding.board_, false);
 	}
 
 	private void printFileInfo() {
