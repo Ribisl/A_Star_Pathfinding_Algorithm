@@ -93,7 +93,7 @@ public class Renderer extends Canvas {
 
 	private void createFrame(String titel) {
 		frame = new JFrame(titel);
-		frame.setUndecorated(false);
+		frame.setUndecorated(true);
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen testing
 		frame.setSize(width, height);
 		frame.setResizable(true);
@@ -126,7 +126,7 @@ public class Renderer extends Canvas {
 			board_.setField(new Road(true, p.x / maze_pixel_width, p.y / maze_pixel_height), p.x / maze_pixel_width,
 					p.y / maze_pixel_height);
 		}
-		render(board_,true);
+		render(board_,false);
 		// g.drawRect(point_x, point_y, 1, 1);
 		// g.setColor(Color.RED);
 	}

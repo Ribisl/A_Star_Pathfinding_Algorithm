@@ -36,7 +36,7 @@ public class CommandInput {
 	Board board_;
 	A_Star pathfinding;
 	Renderer r;
-	
+
 	CommandInput() {
 		commands.put("help", COMMANDS.HELP);
 		commands.put("info", COMMANDS.INFO);
@@ -65,7 +65,7 @@ public class CommandInput {
 			}
 			String[] input_splitted = input.split(" ");
 			String command = input_splitted[0];
-			if(command.length() == 0) {
+			if (command.length() == 0) {
 				System.out.println(INPUT_ERROR);
 				continue;
 			}
@@ -113,45 +113,45 @@ public class CommandInput {
 	private void drawMaze() {
 		Canvas frame = r.getCanvas();
 		frame.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
-			
+
 			@Override
-			public void mousePressed(MouseEvent e) {		
+			public void mousePressed(MouseEvent e) {
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		frame.addMouseMotionListener(new MouseMotionListener() {
-			
+
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				 //r.pointEnd = e.getPoint();				
+				// r.pointEnd = e.getPoint();
 			}
-			
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				r.p = e.getPoint();
-                frame.repaint();
+				frame.repaint();
 			}
 		});
 	}
@@ -165,8 +165,7 @@ public class CommandInput {
 
 		ArrayList<Item> items = board_.getItems();
 
-		pathfinding = new A_Star(board_, items.get(0), items.get(1), board_.getHeight_(),
-				board_.getWidth_(), r);
+		pathfinding = new A_Star(board_, items.get(0), items.get(1), board_.getHeight_(), board_.getWidth_(), r);
 
 		renderBoard(r, pathfinding);
 
@@ -174,38 +173,21 @@ public class CommandInput {
 
 	private void solveMaze() {
 		board_ = r.getBoard();
-		if (!file_loaded_) {
+		ArrayList<Item> items = board_.getItems();
 
-			ArrayList<Item> items = board_.getItems();
+		pathfinding = new A_Star(board_, items.get(0), items.get(1), board_.getHeight_(), board_.getWidth_(), r);
 
-			pathfinding = new A_Star(board_, items.get(0), items.get(1), board_.getHeight_(),
-					board_.getWidth_(), r);
-
-			long startTime = System.currentTimeMillis();
-			System.out.println("Started finding path...");
-			if (pathfinding.findPath()) {
-				System.out.println();
-				System.out.println("FOUND PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
-			} else {
-				System.out.println();
-				System.out.println("NO PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
-			}
-
-			renderBoard(r, pathfinding);
+		long startTime = System.currentTimeMillis();
+		System.out.println("Started finding path...");
+		if (pathfinding.findPath()) {
+			System.out.println();
+			System.out.println("FOUND PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
 		} else {
-
-			long startTime = System.currentTimeMillis();
-			System.out.println("Started finding path...");
-			if (pathfinding.findPath()) {
-				System.out.println();
-				System.out.println("FOUND PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
-			} else {
-				System.out.println();
-				System.out.println("NO PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
-			}
-
-			renderBoard(r, pathfinding);
+			System.out.println();
+			System.out.println("NO PATH AFTER " + (System.currentTimeMillis() - startTime) + "ms");
 		}
+
+		renderBoard(r, pathfinding);
 
 	}
 
