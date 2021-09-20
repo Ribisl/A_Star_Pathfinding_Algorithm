@@ -1,5 +1,8 @@
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -9,6 +12,7 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 
 import Felder.Field;
+import Felder.Road;
 
 public class Renderer extends Canvas {
 
@@ -21,16 +25,24 @@ public class Renderer extends Canvas {
 
 	private int maxF, minF;
 
-	public Renderer() {
+	public Point p = new Point(0, 0);
+
+	Board board_;
+
+	public Renderer(Board board) {
 		createFrame(title);
+		board_ = board;
+		render(null,false);
 	}
 
-	public void render(ArrayList<ArrayList<Field>> board, boolean renderAll) {
+	public void render(Board fields2d_, boolean renderAll) {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			this.createBufferStrategy(1);
 			return;
 		}
+		board_ = fields2d_;
+		ArrayList<ArrayList<Field>> board = fields2d_.getFields2d();
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -52,7 +64,6 @@ public class Renderer extends Canvas {
 		if (renderAll) {
 			findMaxMinF(board);
 		}
-
 		for (ArrayList<Field> x : board) {
 			for (Field f : x) {
 				if (f != null && (!f.isRendered() || renderAll)) {
@@ -96,10 +107,30 @@ public class Renderer extends Canvas {
 				}
 			}
 		});
+
 		frame.setVisible(true);
 		width = frame.getWidth();
 		height = frame.getHeight();
 		frame.requestFocus();
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		System.out.println("repaint");
+		if (board_ != null) {
+			board_.setField(new Road(false, p.x, p.y), p.x, p.y);
+		}
+		// g.drawRect(point_x, point_y, 1, 1);
+		// g.setColor(Color.RED);
+	}
+
+	public JFrame getJFrame() {
+		return frame;
+	}
+
+	public Canvas getCanvas() {
+		return this;
 	}
 
 }

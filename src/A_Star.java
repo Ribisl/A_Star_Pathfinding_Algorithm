@@ -4,9 +4,10 @@ import Felder.Field;
 import Felder.Item;
 
 public class A_Star {
-	public ArrayList<ArrayList<Field>> board_ = new ArrayList<ArrayList<Field>>();
+	public ArrayList<ArrayList<Field>> fields__ = new ArrayList<ArrayList<Field>>();
 	public ArrayList<Field> open_set_ = new ArrayList<Field>();
 
+	Board board_;
 	Item start_;
 	Item goal_;
 	int height_;
@@ -16,12 +17,13 @@ public class A_Star {
 	
 	int frameskip = 60; // set to high number when bigger board (1000x1000) for faster rendering
 
-	public A_Star(ArrayList<Field> fields, Item start_, Item goal_, int height_, int width_, Renderer renderer) {
+	public A_Star(Board board, Item start_, Item goal_, int height_, int width_, Renderer renderer) {
 		super();
+		board_ = board;
 		for (int y = 0; y < height_; y++) {
-			board_.add(new ArrayList<Field>());
+			fields__.add(new ArrayList<Field>());
 			for (int x = 0; x < width_; x++) {
-				board_.get(y).add(fields.get(y * width_ + x));
+				fields__.get(y).add(board.getFields().get(y * width_ + x));
 			}
 		}
 		this.start_ = start_;
@@ -58,18 +60,18 @@ public class A_Star {
 		int y = current.getPosition().y_;
 
 		if (x < width_ - 1) {
-			current.setNeighbor_right(board_.get(y).get(x + 1));
+			current.setNeighbor_right(fields__.get(y).get(x + 1));
 		}
 
 		if (x > 0) {
-			current.setNeighbor_left(board_.get(y).get(x - 1));
+			current.setNeighbor_left(fields__.get(y).get(x - 1));
 		}
 
 		if (y < height_ - 1) {
-			current.setNeighbor_bottom(board_.get(y + 1).get(x));
+			current.setNeighbor_bottom(fields__.get(y + 1).get(x));
 		}
 		if (y > 0) {
-			current.setNeighbor_top(board_.get(y - 1).get(x));
+			current.setNeighbor_top(fields__.get(y - 1).get(x));
 		}
 
 	}

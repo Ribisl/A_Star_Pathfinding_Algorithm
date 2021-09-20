@@ -23,10 +23,34 @@ public class Board {
 		this.width_ = width;
 		this.number_items_ = number_items;
 		this.map_data_ = map_data;
-		System.out.println("Board constructor!");
+		
+		initBoard();
+	}
+	
+	public Board() {
+		height_ = 50;
+		width_ = 50;
+		number_items_ = 2;
+		int counter = 0;
+		for(int y = 0; y < height_; y++) {
+			for(int x = 0; x < width_;x++) {
+				Field field;
+				if(counter == 0) {
+					field = new Item('A', x,y);
+					items_.add((Item) field);
+				} else if(counter == height_*width_-1) {
+					field = new Item('B',x,y);
+					items_.add((Item) field);
+				} else {
+					field = new Road(false,x,y);
+				}
+				fields_.add(field);
+				counter++;
+			}
+		}
 	}
 
-	void initBoard() {
+	private void initBoard() {
 		map_data_ = map_data_.replace("\n", "");
 		for (int y = 0; y < height_; y++) {
 			for (int x = 0; x < width_; x++) {
@@ -47,6 +71,10 @@ public class Board {
 				fields_.add(temp_field);
 			}
 		}
+	}
+	
+	public void setField(Field f,int x, int y) {
+		fields_.set(y*width_+x, f);
 	}
 
 	void printMap() {
@@ -110,5 +138,20 @@ public class Board {
 	public ArrayList<Item> getItems() {
 		return items_;
 	}
+
+	public ArrayList<ArrayList<Field>> getFields2d() {
+		ArrayList<ArrayList<Field>> temp = new ArrayList<ArrayList<Field>>();
+		
+		for(int y = 0; y < height_; y++) {
+			temp.add(new ArrayList<>());
+			for(int x = 0; x < width_; x++) {
+				temp.get(y).add(fields_.get(y*width_+x));
+			}
+		}
+		return temp;
+	}
+
+	
+	
 
 }

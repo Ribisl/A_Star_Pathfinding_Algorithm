@@ -5,7 +5,10 @@ import Felder.Item;
 public class main {
 
 	public static void main(String[] args) {
-		File_handling file_handling = new File_handling();
+		CommandInput cin = new CommandInput();
+		cin.readUserInput();
+		
+		/*File_handling file_handling = new File_handling();
 		file_handling.readMap();
 		Board board = file_handling.initBoard();
 		board.initBoard();
@@ -30,7 +33,7 @@ public class main {
 
 		while (true) {
 			r.render(pathfinding.board_, true);
-		}
+		}*/
 
 	}
 
